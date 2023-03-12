@@ -1,0 +1,56 @@
+@import '../../styles/variables.scss';
+
+.container {
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: white;
+  z-index: 1000;
+
+  @include media-tablet {
+    border-right: 1px solid black;
+    width: 25vw;
+    text-align: left;
+
+    h1 {
+      margin-bottom: calc($gutter * 4);
+    }
+  }
+
+  @include media-desktop {
+    width: 16vw;
+  }
+
+  &__logo {
+    cursor: pointer;
+  }
+
+  &__description {
+    font-weight: $fw-thin;
+    flex: 1 0 auto;
+  }
+
+  &__bottom {
+    text-transform: none;
+    display: none;
+
+    @include media-tablet {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: $fw-regular;
+    }
+  }
+
+  &__expand {
+    cursor: pointer;
+    position: relative;
+    width: 20px;
+    aspect-ratio: 1/1;
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'center';
+  }
+}

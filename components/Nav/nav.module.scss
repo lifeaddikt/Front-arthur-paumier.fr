@@ -1,0 +1,36 @@
+@import '../../styles/variables.scss';
+
+.nav {
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+
+  ul {
+    display: flex;
+    gap: 1.25rem;
+
+    li {
+      display: flex;
+      gap: 0.5rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      @include media-tablet {
+        gap: 1rem;
+      }
+    }
+  }
+
+  &__image {
+    position: relative;
+    width: 15px;
+    aspect-ratio: 1/1;
+    display: 'flex';
+    justify-content: 'center';
+    align-items: 'center';
+  }
+}

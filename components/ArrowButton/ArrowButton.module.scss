@@ -1,0 +1,39 @@
+@import '../../styles/variables.scss';
+
+.button {
+    display: none;
+    width:60px;
+    height:60px;
+    border-radius: 50%;
+    background-color: white;
+    opacity: 0.65;
+    position: absolute;
+    top:50%;
+    right:-30px;
+    translate : 0 -50%;
+
+    &__invisible {
+        display: none;
+    }
+
+    @include media-tablet {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__invisible {
+            display: flex;
+            width:60px;
+            height:60px;
+            border-radius: 50%;
+            background-color: white;
+            opacity: 0.65;
+            position: absolute;
+            top:50%;
+            right:-30px;
+            translate : 0 -50%;
+            opacity: 0;
+            transition: opacity 250ms ease-out;
+        }
+    }
+}

@@ -1,0 +1,71 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    width:100vw;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-weight: $fw-thin;
+    text-transform: uppercase;
+  }
+
+  p {
+    line-height: 30px;
+  }
+
+  h1 {
+    font-family: 'Heebo', sans-serif;
+    font-weight: $fw-medium;
+    letter-spacing: 3px;
+    line-height: 22.5px;
+    margin-bottom: $gutter;
+    font-size: 20px;
+  }
+
+  h2 {
+    font-family: 'Helvetica Neue', 'sans-serif';
+    font-weight: $fw-medium;
+  }
+
+// LISTE DES COLLECTIONS DE LA HOME
+
+.collection-list {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height:100vh;
+  width:100%;
+
+  @include media-tablet {
+    flex-direction: row;
+    overflow-x:scroll;
+}
+}
+
+/// GRID
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -4px; /* gutter size offset */
+  width: auto;
+  max-height: 100vh;
+}
+.my-masonry-grid_column {
+  padding-left: 1px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+  margin-bottom: 1px;
+  background-color: white;
+  opacity: 1;
+  transition: opacity 300ms ease-out;
+
+  &:hover {
+    opacity: 0.85;
+    cursor: pointer;
+  }
+}
