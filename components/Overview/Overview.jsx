@@ -41,7 +41,9 @@ const Overview = ({ pictureData }) => {
 
   useEffect(() => {
     if(!isMobile && isExpanded)
-      setIsExpanded(false)
+      setTimeout(() => {
+        setIsExpanded(false)
+      }, 1000)
   }, [])
 
   useEffect(() => {
@@ -68,12 +70,15 @@ const Overview = ({ pictureData }) => {
       }
     }
   
-    leftSide.current.addEventListener('mousemove', moveCursor)
-    leftSide.current.addEventListener('mouseenter', handleMouseEnter)
-    leftSide.current.addEventListener('mouseleave', handleMouseLeave)
-    rightSide.current.addEventListener('mousemove', moveCursor)
-    rightSide.current.addEventListener('mouseenter', handleMouseEnter)
-    rightSide.current.addEventListener('mouseleave', handleMouseLeave)
+
+    setTimeout(() => {
+      leftSide?.current?.addEventListener('mousemove', moveCursor)
+      leftSide?.current?.addEventListener('mouseenter', handleMouseEnter)
+      leftSide?.current?.addEventListener('mouseleave', handleMouseLeave)
+      rightSide?.current?.addEventListener('mousemove', moveCursor)
+      rightSide?.current?.addEventListener('mouseenter', handleMouseEnter)
+      rightSide?.current?.addEventListener('mouseleave', handleMouseLeave)
+    }, 1000)
 
     return () => {
       if (leftSide.current && rightSide.current) {
@@ -86,7 +91,7 @@ const Overview = ({ pictureData }) => {
       }
     }
 
-  }, [])
+  })
 
   // eslint-disable-next-line react/prop-types
   const Arrow = () => (
@@ -95,20 +100,16 @@ const Overview = ({ pictureData }) => {
         opacity: 0,
       }}
       animate={{
-        opacity: 0.65,
+        opacity: 1,
       }}
       ref={arrow} 
       style={{
         width: '60px',
         height: '60px',
         position: 'fixed',
-        borderRadius: '50%',
-        backgroundColor: 'white',
         zIndex: 100,
         transform: 'translate(-50%, -50%)',
         pointerEvents: 'none',
-        transitionDuration: '200ms',
-        transitionTimingFunction: 'ease-out',
       }}>
       <img style={{ rotate: displayLeftArrow ? '180deg' : '0deg' }}src='/images/icon-next.png' alt="Flêche signifiant qu'on peut scroll" />
     </motion.div>
@@ -125,11 +126,11 @@ const Overview = ({ pictureData }) => {
           </motion.div>
         </Link>
         <AnimatePresence mode='wait'>
-          <motion.div key={id} className={styles.container__picture} initial={{ opacity: 0, x: 200 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, transition: { delay: 1 } }}>
-            <div style={{ cursor: previousPictureId !== undefined ? 'pointer' : 'default' }} className={styles.container__picture__left} ref={leftSide} onMouseDown={() => setHasMoved(false)} onClick={() => {router.push(previousPictureId !== undefined ? `/collection/${slug}/picture/${previousPictureId }` : '#')}} />
-            <div style={{ cursor: nextPictureId !== undefined ? 'pointer' : 'default' }} className={styles.container__picture__right} ref={rightSide} onMouseDown={() => setHasMoved(false)} onClick={() => {router.push(nextPictureId !== undefined ? `/collection/${slug}/picture/${nextPictureId }` : '#')}} />
-            <motion.h2 className={styles.container__picture__place} initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ delay: 0.5 }}>{place}</motion.h2>
-            <motion.h2 className={styles.container__picture__date} initial={{ transformOrigin: 'left', transform: 'rotate(-90deg)', opacity: 0, bottom: -30 }} animate={{ opacity: 1, bottom: '-5px' }} exit={{ opacity: 0 }} transition={{ delay: 0.6 }}>{date}</motion.h2>
+          <motion.div key={id} className={styles.container__picture} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ type: 'Tween', duration: 0.25, delay: 0.25 }} exit={{ opacity: 0, x: 20, transition: { duration: 0.25, delay: 0.25 } }}>
+            <div style={{ cursor: previousPictureId !== undefined ? 'none' : 'default' }} className={styles.container__picture__left} ref={leftSide} onMouseDown={() => { setHasMoved(false); setDisplayLeftArrow(false)}} onClick={() => {router.push(previousPictureId !== undefined ? `/collection/${slug}/picture/${previousPictureId }` : '#')}} />
+            <div style={{ cursor: nextPictureId !== undefined ? 'none' : 'default' }} className={styles.container__picture__right} ref={rightSide} onMouseDown={() => {setHasMoved(false); setDisplayRightArrow(false)}} onClick={() => {router.push(nextPictureId !== undefined ? `/collection/${slug}/picture/${nextPictureId }` : '#')}} />
+            <h2 className={styles.container__picture__place}>{place}</h2>
+            <h2 className={styles.container__picture__date}>{date}</h2>
             <Image
               width='0'
               height='0'
