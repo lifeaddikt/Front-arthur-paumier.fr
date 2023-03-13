@@ -18,7 +18,7 @@ const Nav = ({ previousPictureId, nextPictureId }) => {
 
   return (
     <AnimatePresence mode='wait'>
-      <motion.nav className={styles.nav} key={id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { delay: 0, duration: 1 } }} transition={{ delay: 1.75 }}>
+      <motion.nav className={styles.nav} key={id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { delay: 0 } }} transition={{ delay: 0.75 }}>
         <ul>
           <Link href={previousPictureId !== undefined ? `/collection/${slug}/picture/${previousPictureId }` : '#'}>
             <motion.li style={previousPictureId === undefined ? filter : {}} whileTap={{ scale: previousPictureId === undefined ? 1 : 0.8 }}>
