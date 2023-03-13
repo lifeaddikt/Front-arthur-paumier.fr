@@ -38,6 +38,7 @@ const Home = ({ collections }) => {
 
   useEffect(() => {
     setCountImgLoaded(0)
+    setLoading(true)
     window.addEventListener('resize', handleResize)
     handleResize()
 
