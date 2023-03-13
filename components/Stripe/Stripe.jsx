@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/future/image'
 import { motion } from 'framer-motion'
 
-const Stripe = ({ slug, name, desktop_img_url, mobile_img_url, isMobile }) => (
+const Stripe = ({ slug, name, desktop_img_url, mobile_img_url, isMobile, setCountImgLoaded }) => (
   <div className={styles.stripe}>
     <Image
       draggable='false'
@@ -17,6 +17,7 @@ const Stripe = ({ slug, name, desktop_img_url, mobile_img_url, isMobile }) => (
       sizes='(max-width: 768px) 80vw,
         100vw'
       priority
+      onLoadingComplete={() => setCountImgLoaded(prev => prev + 1)}
     />
     <Link href={'/collection/' + slug}>
       <motion.h2 whileTap={{ scale: 0.95 }}>{name}</motion.h2>
@@ -31,6 +32,7 @@ Stripe.propTypes = {
   desktop_img_url: PropTypes.string.isRequired,
   mobile_img_url: PropTypes.string,
   isMobile: PropTypes.bool.isRequired,
+  setCountImgLoaded: PropTypes.func.isRequired,
 }
 
 export default Stripe

@@ -24,7 +24,6 @@ const Layout = ({ children }) => {
           animate='enter' 
           exit='exit' 
           key={router.pathname}
-          style={{ flex: 1, maxHeight: '100vh', overflow: 'scroll' }}
         >{children}</motion.main>
       </AnimatePresence>
     </div>

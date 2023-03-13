@@ -5,6 +5,7 @@
   height: 100%;
   overflow: scroll;
   display: flex;
+  background-color: white;
 
   @include media-tablet {
     padding: 2rem;

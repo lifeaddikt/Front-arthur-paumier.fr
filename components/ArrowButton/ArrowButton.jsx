@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 const ArrowButton = ({ isVisible }) => (
   <>
     <div className={isVisible ? styles.button : styles.button__invisible}>
-      <img src='/images/icon-next.png' alt="Flêche signifiant qu'on peut scroll" />
+      <img draggable='false' src='/images/icon-next.png' alt="Flêche signifiant qu'on peut scroll" />
     </div>
   </>
 )

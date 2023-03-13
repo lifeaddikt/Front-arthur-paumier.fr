@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import Image from 'next/future/image'
 import Link from 'next/link'
 import Nav from '../Nav/Nav.jsx'
+import Loader from '../Loader/Loader.jsx'
 import styles from './overview.module.scss'
 import PropTypes from 'prop-types'
 import { useRouter } from 'next/router'
@@ -27,6 +28,7 @@ const Overview = ({ pictureData }) => {
   const [displayLeftArrow, setDisplayLeftArrow] = useState(false)
   const [displayRightArrow, setDisplayRightArrow] = useState(false)
   const [hasMoved, setHasMoved] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const leftSide = useRef(null)
   const rightSide = useRef(null)
@@ -40,10 +42,14 @@ const Overview = ({ pictureData }) => {
   const isLandscape = picture.media_details.height > picture.media_details.width
 
   useEffect(() => {
+    setLoading(true)
+  }, [id])
+
+  useEffect(() => {
     if(!isMobile && isExpanded)
       setTimeout(() => {
         setIsExpanded(false)
-      }, 1000)
+      }, 1500)
   }, [])
 
   useEffect(() => {
@@ -114,38 +120,41 @@ const Overview = ({ pictureData }) => {
       <img style={{ rotate: displayLeftArrow ? '180deg' : '0deg' }}src='/images/icon-next.png' alt="Flêche signifiant qu'on peut scroll" />
     </motion.div>
   )
-    
 
   return (
-    <div className={styles.container} ref={container} style={{ alignItems: isLandscape ? 'flex-start' : 'center' }}>
-      {(((displayLeftArrow && previousPictureId !== undefined) || (displayRightArrow && nextPictureId !== undefined)) && hasMoved) && <Arrow />}
-      <div className={styles.container__layout}>
-        <Link href={`/collection/${slug}`}>
-          <motion.div whileTap={{ scale: 0.8 }} className={styles.container__cross}>
-            <Image draggable='false' src='/images/cross.jpeg' width='80' height='80' alt='Cliquer pour revenir en arrière' />
-          </motion.div>
-        </Link>
-        <AnimatePresence mode='wait'>
-          <motion.div key={id} className={styles.container__picture} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ type: 'Tween', duration: 0.25, delay: 0.25 }} exit={{ opacity: 0, x: 20, transition: { duration: 0.25, delay: 0.25 } }}>
-            <div style={{ cursor: previousPictureId !== undefined ? 'none' : 'default' }} className={styles.container__picture__left} ref={leftSide} onMouseDown={() => { setHasMoved(false); setDisplayLeftArrow(false)}} onClick={() => {router.push(previousPictureId !== undefined ? `/collection/${slug}/picture/${previousPictureId }` : '#')}} />
-            <div style={{ cursor: nextPictureId !== undefined ? 'none' : 'default' }} className={styles.container__picture__right} ref={rightSide} onMouseDown={() => {setHasMoved(false); setDisplayRightArrow(false)}} onClick={() => {router.push(nextPictureId !== undefined ? `/collection/${slug}/picture/${nextPictureId }` : '#')}} />
-            <h2 className={styles.container__picture__place}>{place}</h2>
-            <h2 className={styles.container__picture__date}>{date}</h2>
-            <Image
-              width='0'
-              height='0'
-              style={{ width: '100%', height: '100%', maxHeight: '800px', display: 'block' }}
-              src={picture.source_url}
-              alt={picture.alt_text ? picture.alt_text : 'Photo de la collection'}
-              sizes='100vw'
-              quality='100'
-              priority
-            />
-          </motion.div>
-        </AnimatePresence>
-        <Nav nextPictureId={nextPictureId} previousPictureId={previousPictureId} />
+    <>
+      {loading && <Loader />}
+      <div className={styles.container} ref={container} style={{ alignItems: isLandscape ? 'flex-start' : 'center' }}>
+        {(((displayLeftArrow && previousPictureId !== undefined) || (displayRightArrow && nextPictureId !== undefined)) && hasMoved) && <Arrow />}
+        <div className={styles.container__layout}>
+          <Link href={`/collection/${slug}`}>
+            <motion.div whileTap={{ scale: 0.8 }} className={styles.container__cross}>
+              <Image draggable='false' src='/images/cross.jpeg' width='80' height='80' alt='Cliquer pour revenir en arrière' />
+            </motion.div>
+          </Link>
+          <AnimatePresence mode='wait'>
+            <motion.div key={id} className={styles.container__picture} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ type: 'Tween', duration: 0.25, delay: 0.25 }} exit={{ opacity: 0, x: 20, transition: { duration: 0.25, delay: 0.25 } }}>
+              <div style={{ cursor: previousPictureId !== undefined ? 'none' : 'default' }} className={styles.container__picture__left} ref={leftSide} onMouseDown={() => { setHasMoved(false); setDisplayLeftArrow(false)}} onClick={() => {router.push(previousPictureId !== undefined ? `/collection/${slug}/picture/${previousPictureId }` : '#')}} />
+              <div style={{ cursor: nextPictureId !== undefined ? 'none' : 'default' }} className={styles.container__picture__right} ref={rightSide} onMouseDown={() => {setHasMoved(false); setDisplayRightArrow(false)}} onClick={() => {router.push(nextPictureId !== undefined ? `/collection/${slug}/picture/${nextPictureId }` : '#')}} />
+              <h2 className={styles.container__picture__place}>{place}</h2>
+              <h2 className={styles.container__picture__date}>{date}</h2>
+              <Image
+                width='0'
+                height='0'
+                style={{ width: '100%', height: '100%', maxHeight: '800px', display: 'block' }}
+                src={picture.source_url}
+                alt={picture.alt_text ? picture.alt_text : 'Photo de la collection'}
+                sizes='100vw'
+                quality='100'
+                priority
+                onLoadingComplete={() => setLoading(false)}
+              />
+            </motion.div>
+          </AnimatePresence>
+          <Nav nextPictureId={nextPictureId} previousPictureId={previousPictureId} />
+        </div>
       </div>
-    </div>
+    </>
   )}
 
 Overview.propTypes = {
