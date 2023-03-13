@@ -7,6 +7,7 @@ import Masonry from 'react-masonry-css'
 import { motion } from 'framer-motion'
 import useDraggable from '../../hooks/useDraggable'
 import Link from 'next/link'
+import styles from './grid.module.scss'
 
 const Grid = ({ pictures }) => {
   const Context = useAppContext()
@@ -39,7 +40,7 @@ const Grid = ({ pictures }) => {
 
 
   return (
-    <div onScroll={handleScroll} style={{ height: '100vh', overflowY: 'auto', backgroundColor: 'black' }} ref={grid} data-scroll-section>
+    <div onScroll={handleScroll} className={styles.grid} ref={grid} data-scroll-section>
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className='my-masonry-grid'
