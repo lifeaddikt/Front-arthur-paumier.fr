@@ -17,7 +17,7 @@ const pictureService = {
   loadPicturesByCollection: async slug => {
     try {
       const response = await fetch(
-        `${ pictureService.baseUrl }/picture?_embed&collection_slug=${ slug }`,
+        `${ pictureService.baseUrl }/picture?_embed&collection_slug=${ slug }&per_page=100`,
       )
       if (!response.ok) {
         throw new Error(`Erreur HTTP : ${response.status}`)

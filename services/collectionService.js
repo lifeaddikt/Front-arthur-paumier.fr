@@ -3,7 +3,7 @@ const collectionService = {
 
   loadAllCollections: async () => {
     try {
-      const response = await fetch(`${ collectionService.baseUrl }/collection?acf_format=standard`)
+      const response = await fetch(`${ collectionService.baseUrl }/collection?acf_format=standard&per_page=100`)
       if (!response.ok) {
         throw new Error(`Erreur HTTP : ${response.status}`)
       }

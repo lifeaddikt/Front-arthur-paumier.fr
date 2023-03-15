@@ -39,6 +39,9 @@ const Overview = ({ pictureData }) => {
   const router = useRouter()
   const { slug, id } = router.query
 
+  // const test = async () => await fetch.post('/api/getBase64', { url: picture.source_url })
+  // console.log(test())
+
   const isLandscape = picture.media_details.height > picture.media_details.width
 
   useEffect(() => {

@@ -38,7 +38,7 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
@@ -48,6 +48,7 @@ export async function getStaticProps({ params }) {
     props: {
       pictureData,
     },
+    revalidate: 10,
   }
 }
 
