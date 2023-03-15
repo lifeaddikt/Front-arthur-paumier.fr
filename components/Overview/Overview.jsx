@@ -99,7 +99,6 @@ const Overview = ({ pictureData }) => {
 
   })
 
-  // eslint-disable-next-line react/prop-types
   const Arrow = () => (
     <motion.div 
       initial={{

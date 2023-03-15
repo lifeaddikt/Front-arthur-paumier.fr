@@ -34,8 +34,8 @@ export async function getStaticPaths() {
     params: { slug: collection.slug },
   }))
   return {
-    paths,
-    fallback: false,
+    paths,git 
+    fallback: 'blocking',
   }
 }
 
