@@ -34,7 +34,7 @@ export async function getStaticPaths() {
     params: { slug: collection.slug },
   }))
   return {
-    paths,git 
+    paths,
     fallback: 'blocking',
   }
 }
@@ -44,8 +44,8 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       pictures,
-      revalidate: 10,
     },
+    revalidate: 10,
   }
 }
 
