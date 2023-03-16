@@ -1,10 +1,14 @@
-/** @type {import('next').NextConfig} */
+const { withPlaiceholder } = require('@plaiceholder/next')
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['s3-us-west-2.amazonaws.com', 'back.arthur-paumier.fr', 'localhost'],
+    domains: [
+      'back.arthur-paumier.fr',
+      'localhost',
+    ],
   },
 }
 
-module.exports = nextConfig
+module.exports = withPlaiceholder(nextConfig)

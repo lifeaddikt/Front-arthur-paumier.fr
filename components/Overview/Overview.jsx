@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react'
 import Image from 'next/future/image'
 import Link from 'next/link'
 import Nav from '../Nav/Nav.jsx'
-import Loader from '../Loader/Loader.jsx'
 import styles from './overview.module.scss'
 import PropTypes from 'prop-types'
 import { useRouter } from 'next/router'
@@ -11,8 +10,9 @@ import useDraggable from '../../hooks/useDraggable'
 import { useAppContext } from '../../context/state'
 import useMediaQueries from '../../hooks/useMediaQueries'
 
+const Overview =  ({ pictureData }) => {
 
-const Overview = ({ pictureData }) => {
+  console.log(pictureData)
 
   const isMobile = useMediaQueries('(max-width: 576px)')
 
@@ -28,7 +28,7 @@ const Overview = ({ pictureData }) => {
   const [displayLeftArrow, setDisplayLeftArrow] = useState(false)
   const [displayRightArrow, setDisplayRightArrow] = useState(false)
   const [hasMoved, setHasMoved] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   const leftSide = useRef(null)
   const rightSide = useRef(null)
@@ -39,13 +39,12 @@ const Overview = ({ pictureData }) => {
   const router = useRouter()
   const { slug, id } = router.query
 
-  // const test = async () => await fetch.post('/api/getBase64', { url: picture.source_url })
-  // console.log(test())
-
-  const isLandscape = picture.media_details.height > picture.media_details.width
+  const isLandscape = picture.media_details.width > picture.media_details.height
 
   useEffect(() => {
-    setLoading(true)
+    if(!isLoading) {
+      setIsLoading(true)
+    }
   }, [id])
 
   useEffect(() => {
@@ -125,8 +124,7 @@ const Overview = ({ pictureData }) => {
 
   return (
     <>
-      {loading && <Loader />}
-      <div className={styles.container} ref={container} style={{ alignItems: isLandscape ? 'flex-start' : 'center' }}>
+      <div className={styles.container} ref={container} style={{ alignItems: isLandscape ? 'center' : 'flex-start' }}>
         {(((displayLeftArrow && previousPictureId !== undefined) || (displayRightArrow && nextPictureId !== undefined)) && hasMoved) && <Arrow />}
         <div className={styles.container__layout}>
           <Link href={`/collection/${slug}`}>
@@ -141,15 +139,17 @@ const Overview = ({ pictureData }) => {
               <h2 className={styles.container__picture__place}>{place}</h2>
               <h2 className={styles.container__picture__date}>{date}</h2>
               <Image
-                width='0'
-                height='0'
-                style={{ width: '100%', height: '100%', maxHeight: '800px', display: 'block' }}
+                width={isLoading ? picture.media_details.width : 0}
+                height={isLoading ? picture.media_details.height : 0}
+                style={{ width: isLoading ? picture.media_details.width : '100%', height: isLoading ? picture.media_details.height : '100%', maxWidth: isLoading ? '800px' : '100%', maxHeight: '800px', display: 'block' }}
                 src={picture.source_url}
                 alt={picture.alt_text ? picture.alt_text : 'Photo de la collection'}
                 sizes='100vw'
                 quality='100'
                 priority
-                onLoadingComplete={() => setLoading(false)}
+                placeholder='blur'
+                blurDataURL={pictureData.base64}
+                onLoadingComplete={() => setIsLoading(false)}
               />
             </motion.div>
           </AnimatePresence>
