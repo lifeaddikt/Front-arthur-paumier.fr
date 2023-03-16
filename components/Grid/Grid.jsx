@@ -2,12 +2,10 @@ import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import { useAppContext } from '../../context/state'
-import Image from 'next/future/image'
 import Masonry from 'react-masonry-css'
-import { motion } from 'framer-motion'
 import useDraggable from '../../hooks/useDraggable'
-import Link from 'next/link'
 import styles from './grid.module.scss'
+import GridItem from './GridItem.jsx'
 
 const Grid = ({ pictures }) => {
   const Context = useAppContext()
@@ -47,21 +45,7 @@ const Grid = ({ pictures }) => {
         columnClassName='my-masonry-grid_column'
       >
         {pictures.map(picture => (
-          <motion.div whileTap={{ scale: 0.995 }} key={picture.id}>
-            <Link href={`${slug}/picture/${picture.id}`}>
-              <a style={{ display: 'contents' }} onClick={isDragging ? e => e.preventDefault() : null} onMouseDown={e => { e.target.style.cursor = 'grabbing'}} onMouseUp={e => { e.target.style.cursor = 'pointer'}} onMouseOut={e => { e.target.style.cursor = 'pointer'}}>
-                <Image
-                  draggable='false'
-                  src={picture._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url}
-                  width='0'
-                  height='0'
-                  sizes='25vw' /// A FAIRE
-                  style={{ width: '100%', height: '100%', display: 'block' }}
-                  alt='à faire'
-                />
-              </a>
-            </Link>
-          </motion.div>
+          <GridItem key={picture.id} slug={slug} picture={picture} isDragging={isDragging} />
         ))}
       </Masonry>
     </div>

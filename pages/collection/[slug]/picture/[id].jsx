@@ -4,6 +4,7 @@ import Overview from '../../../../components/Overview/Overview.jsx'
 import collectionService from '../../../../services/collectionService'
 import pictureService from '../../../../services/pictureService'
 import PropTypes from 'prop-types'
+import { getPlaiceholder } from 'plaiceholder'
 
 const PicturePage = ({ pictureData }) => {
   const title = `${process.env.NEXT_PUBLIC_APP_TITLE} | Page photo`
@@ -44,6 +45,11 @@ export const getStaticPaths = async () => {
 
 export async function getStaticProps({ params }) {
   const pictureData = await pictureService.loadPictureById(parseInt(params.id))
+
+  const { base64 } = await getPlaiceholder(pictureData._embedded['wp:featuredmedia'][0].source_url) 
+
+  pictureData.base64 = base64
+
   return {
     props: {
       pictureData,

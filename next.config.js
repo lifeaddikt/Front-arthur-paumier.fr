@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const { withPlaiceholder } = require('@plaiceholder/next')
 
 const nextConfig = {

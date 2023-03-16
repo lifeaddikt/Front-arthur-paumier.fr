@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import Grid from '../../components/Grid/Grid'
 import collectionService from '../../services/collectionService'
 import pictureService from '../../services/pictureService'
+import { getPlaiceholder } from 'plaiceholder'
 
 const Collection = ({ pictures }) => {
   const router = useRouter()
@@ -41,9 +42,16 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const pictures = await pictureService.loadPicturesByCollection(params.slug)
+
+  const picturesWithBase64 = await Promise.all(pictures.map(async picture => {
+    const { base64 } = await getPlaiceholder(picture._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url)
+    picture.base64 = base64
+    return picture
+  }))
+
   return {
     props: {
-      pictures,
+      pictures: picturesWithBase64,
     },
     revalidate: 10,
   }
