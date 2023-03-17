@@ -49,6 +49,13 @@ export async function getStaticProps({ params }) {
     return picture
   }))
 
+  picturesWithBase64.sort((a, b) => {
+    const priorityA = a.acf.priority !== undefined ? parseInt(a.acf.priority) : 999
+    const priorityB = b.acf.priority !== undefined ? parseInt(b.acf.priority) : 999
+
+    return priorityA - priorityB
+  })
+
   return {
     props: {
       pictures: picturesWithBase64,

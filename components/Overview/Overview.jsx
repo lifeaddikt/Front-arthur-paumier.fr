@@ -139,9 +139,9 @@ const Overview =  ({ pictureData }) => {
               <h2 className={styles.container__picture__place}>{place}</h2>
               <h2 className={styles.container__picture__date}>{date}</h2>
               <Image
-                width={isLoading ? picture.media_details.width : 0}
+                width={isLoading ? picture.media_details.width / 2 : 0}
                 height={isLoading ? picture.media_details.height : 0}
-                style={{ width: isLoading ? picture.media_details.width : '100%', height: isLoading ? picture.media_details.height : '100%', maxWidth: isLoading ? '800px' : '100%', maxHeight: '800px', display: 'block' }}
+                style={{ width: isLoading ? picture.media_details.width / 2 : '100%', height: isLoading ? picture.media_details.height : '100%', maxWidth: isLoading ? '800px' : '100%', maxHeight: '800px', display: 'block' }}
                 src={picture.source_url}
                 alt={picture.alt_text ? picture.alt_text : 'Photo de la collection'}
                 sizes='100vw'
