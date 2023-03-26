@@ -9,10 +9,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import useDraggable from '../../hooks/useDraggable'
 import { useAppContext } from '../../context/state'
 import useMediaQueries from '../../hooks/useMediaQueries'
+import Loader from '../Loader/Loader.jsx'
 
 const Overview =  ({ pictureData }) => {
-
-  console.log(pictureData)
 
   const isMobile = useMediaQueries('(max-width: 576px)')
 
@@ -124,6 +123,7 @@ const Overview =  ({ pictureData }) => {
 
   return (
     <>
+      {isLoading && <Loader />}
       <div className={styles.container} ref={container} style={{ alignItems: isLandscape ? 'center' : 'flex-start' }}>
         {(((displayLeftArrow && previousPictureId !== undefined) || (displayRightArrow && nextPictureId !== undefined)) && hasMoved) && <Arrow />}
         <div className={styles.container__layout}>
@@ -139,16 +139,14 @@ const Overview =  ({ pictureData }) => {
               <h2 className={styles.container__picture__place}>{place}</h2>
               <h2 className={styles.container__picture__date}>{date}</h2>
               <Image
-                width={isLoading ? picture.media_details.width / 2 : 0}
-                height={isLoading ? picture.media_details.height : 0}
-                style={{ width: isLoading ? picture.media_details.width / 2 : '100%', height: isLoading ? picture.media_details.height : '100%', maxWidth: isLoading ? '800px' : '100%', maxHeight: '800px', display: 'block' }}
+                width={0}
+                height={0}
+                style={{ width: '100%', height: '100%', maxWidth: '100%', maxHeight: '800px', display: 'block' }}
                 src={picture.source_url}
                 alt={picture.alt_text ? picture.alt_text : 'Photo de la collection'}
                 sizes='100vw'
                 quality='100'
                 priority
-                placeholder='blur'
-                blurDataURL={pictureData.base64}
                 onLoadingComplete={() => setIsLoading(false)}
               />
             </motion.div>

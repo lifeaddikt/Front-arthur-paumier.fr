@@ -1,9 +1,8 @@
 @import '../../styles/variables.scss';
 
 .grid {
-    background-color: black;
-
     @include media-tablet {
+    background-color: black;
     height: 100vh;
     overflow-y: auto
     }
