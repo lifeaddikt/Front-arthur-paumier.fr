@@ -10,10 +10,7 @@
     "lint": "eslint . --ext .jsx --ext .js"
   },
   "dependencies": {
-    "@babel/core": "^7.20.12",
-    "@babel/preset-react": "^7.18.6",
     "@plaiceholder/next": "^2.5.0",
-    "babel-loader": "^9.1.2",
     "eslint": "^8.33.0",
     "framer-motion": "^9.0.4",
     "fs": "^0.0.1-security",
@@ -27,7 +24,11 @@
     "sharp": "^0.31.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.11",
     "@babel/eslint-parser": "^7.19.1",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.5",
+    "babel-loader": "^9.1.3",
     "eslint-config-next": "13.1.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^16.0.3",
