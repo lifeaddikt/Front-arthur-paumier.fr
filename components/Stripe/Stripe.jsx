@@ -8,7 +8,11 @@ import { motion } from 'framer-motion'
 
 const Stripe = ({ slug, name, desktop_img_url, mobile_img_url, isMobile, setCountImgLoaded }) => (
   <div className={styles.stripe}>
+    <Link href={'/collection/' + slug}>
+      <motion.h2 whileTap={{ scale: 0.95 }}>{name}</motion.h2>
+    </Link>
     <Image
+      className={styles.stripe__image}
       draggable='false'
       src={isMobile && mobile_img_url.length > 0 ? mobile_img_url : desktop_img_url}
       alt={`Image de présentation de la collection ${name}.`}
@@ -19,9 +23,6 @@ const Stripe = ({ slug, name, desktop_img_url, mobile_img_url, isMobile, setCoun
       priority
       onLoadingComplete={() => setCountImgLoaded(prev => prev + 1)}
     />
-    <Link href={'/collection/' + slug}>
-      <motion.h2 whileTap={{ scale: 0.95 }}>{name}</motion.h2>
-    </Link>
     <div className={styles.stripe__filter}></div>
   </div>
 )
